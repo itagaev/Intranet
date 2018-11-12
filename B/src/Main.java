@@ -8,48 +8,48 @@ public class Main {
    public static ArrayList<Student> students;
     public static ArrayList<Teacher> teachers;
     public static ArrayList<Course> coursesreg;
-    public static int currentyear = 2018;
+    public static int currentyear;
     public static void main(String[] args){
-        initpath = "D:\\ProjectAttempts\\B\\src\\actions";
-        HashMap<String, String> courses = new HashMap<String, String>();
 
+        initpath = "D:\\ProjectAttempts\\B\\src\\actions";
+        currentyear = 2018;
         students = new ArrayList<Student>();
         teachers = new ArrayList<Teacher>();
         coursesreg = new ArrayList<Course>();
-        try{
-            FileReader fr = new FileReader("D:\\ProjectAttempts\\B\\src\\courses.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String line = br.readLine();
-            while(line != null){
-                String[] c = line.split(" ", 2);
-                courses.put(c[0], c[1]);
-                line = br.readLine();
-            }
-            br.close();
-        } catch(IOException e){ e.printStackTrace();}
+        students.add(new Student("Makatov", "Samat", "FIT", "VTIPO", 2, 2.9));
+        students.add(new Student("Saidagali", "Adil", "FIT", "VTIPO", 2, 3.34));
+        students.add(new Student("Tagaev", "Ilyas", "FIT", "VTIPO", 2, 3.35));
+        students.add(new Student("Tursyn", "Makhmut", "FIT", "AU", 2, 3.5));
+        teachers.add(new Teacher("Baisakov", "Beisenbek", "FIT"));
+        teachers.add(new Teacher("Akshabayev", "Askar", "FIT"));
+        teachers.add(new Teacher("Mukhsimbayev", "Bobur", "FIT"));
+        ArrayList<String> fit = new ArrayList<String>();
 
-        /* test delete, add courses
-        Teacher t = new Teacher("Ivan", "Ivanov", "FIT", 500000);
-        Iterator it = courses.entrySet().iterator();
+        coursesreg.add(new Course("OOP", "Good subject", 2, "FIT", "IS", "VTIPO"));
+        coursesreg.add(new Course("Algorithms and Data Structures", "Hard subject", 2, "FIT", "VTIPO", "IS", "AU"));
+        coursesreg.add(new Course("Finance", "Excellent",1,"Finance", "Audit"));
+
+        CourseFile file1 = new CourseFile("Object book", "D:\\ProjectAttempts\\B\\src\\files\\oop.txt");
+        coursesreg.get(0).files.add(file1);
+        coursesreg.get(0).dialStudents();
+        coursesreg.get(1).dialStudents();
+        Iterator it = coursesreg.get(0).students.iterator();
         while(it.hasNext()){
-            Map.Entry pair = (Map.Entry)it.next();
-            String j = (String)pair.getKey();
-            String[] fit = j.split("/");
-            if(fit[0].equals(t.department)){
-                String o = (String)pair.getValue();
-
-                t.addCourse(new Course(o, "JAi"));
-            }
-            it.remove();
+            System.out.println(it.next());
         }
-        t.viewCourses();
-        t.deleteCourse("Programming Principles 2018");
-        t.viewCourses();
-        */
+        Iterator it1 = coursesreg.get(1).students.iterator();
+        while(it1.hasNext()){
+            System.out.println(it1.next());
+        }
 
-         ArrayList<String> o = new ArrayList<String>();
-         o.add("VTIPO");
-        /* Student s = new Student("Tagayev", "Ilyas", "FIT", "VTIPO" , 2, 4);
+
+
+
+
+
+    }
+}
+   /* Student s = new Student("Tagayev", "Ilyas", "FIT", "VTIPO" , 2, 4);
          Course c = new Course("OOP", "F", 2, o);
 
          Teacher t = new Teacher("O", "OO", "FIT", 400000);
@@ -69,10 +69,29 @@ public class Main {
         */
 
 
-         Student s = new Student("Tagaev", "Ilas", "FIT", "lu4wiy", 2, 4);
+       /* test delete, add courses
+        Teacher t = new Teacher("Ivan", "Ivanov", "FIT", 500000);
+        Iterator it = courses.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry pair = (Map.Entry)it.next();
+            String j = (String)pair.getKey();
+            String[] fit = j.split("/");
+            if(fit[0].equals(t.department)){
+                String o = (String)pair.getValue();
+
+                t.addCourse(new Course(o, "JAi"));
+            }
+            it.remove();
+        }
+        t.viewCourses();
+        t.deleteCourse("Programming Principles 2018");
+        t.viewCourses();
+        */
+
+       /*
+       Student s = new Student("Tagaev", "Ilas", "FIT", "lu4wiy", 2, 4);
 
          s.serialize();
          Student d = s.deSerialize();
         System.out.println(d);
-    }
-}
+        */

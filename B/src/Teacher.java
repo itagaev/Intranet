@@ -20,6 +20,19 @@ public class Teacher extends User implements Comparable<Teacher>{
 
    public Teacher() {}
 
+    public Teacher(String surname, String name, String department){
+        this.surname = surname;
+        this.name = name;
+        this.department = department;
+        actions = new File(Main.initpath + "\\" + this.surname + this.name + "Teacher");
+        try{
+            if(!actions.exists())
+                actions.createNewFile();
+        } catch(IOException e){
+            System.out.println("Error");
+        }
+    }
+
    public Teacher(String surname, String name, String department, double salary){
         this.surname = surname;
         this.name = name;
@@ -56,19 +69,27 @@ public class Teacher extends User implements Comparable<Teacher>{
     double getSalary() {return this.salary;}
 
     void addCourse(Course c){
-       this.mycourses.add(c);
-        try{
-            FileWriter fw = new FileWriter(this.actions, true);
-            BufferedWriter bw = new BufferedWriter(fw);
+       Iterator it = Main.coursesreg.iterator();
+       while(it.hasNext()){
+           Course cur = (Course)it.next();
+           if(cur.department == this.department){
+               mycourses.add(cur);
+               try{
+                   FileWriter fw = new FileWriter(this.actions, true);
+                   BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write("Teacher added the course " + c.courseTitle);
-            bw.newLine();
+                   bw.write("Teacher added the course " + c.courseTitle);
+                   bw.newLine();
 
-            bw.close();
+                   bw.close();
 
-        } catch(IOException e) {
-            System.out.println("Error");
-        }
+               } catch(IOException e) {
+                   System.out.println("Error");
+               }
+               break;
+           }
+       }
+
     }
 
     void deleteCourse(String nameOfCourse){

@@ -1,24 +1,43 @@
-import jdk.jfr.Percentage;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Course {
-    String courseTitle, description, speciality;
-    ArrayList<String> specialities;
+    String courseTitle, description, speciality, department;
+    ArrayList<String> specialities = new ArrayList<String>();
     int yearOfStudy;
+    ArrayList<Student> students = new ArrayList<Student>();
+    ArrayList<CourseFile> files = new ArrayList<CourseFile>();
 
     public Course() {}
 
-    public Course(String courseTitle, String description, int yearOfStudy, ArrayList<String> specialities){
+    public Course(String courseTitle, String description, int yearOfStudy, String department, String ...a){
         this.courseTitle = courseTitle;
         this.description = description;
         this.yearOfStudy = yearOfStudy;
-        for(String s : specialities){
-            this.specialities.add(s);
+        this.department = department;
+        for(String h : a){
+            this.specialities.add(h);
         }
+        students = new ArrayList<Student>();
     }
 
+    void dialStudents(){
+        Iterator it = Main.students.iterator();
+        while(it.hasNext()){
+            Student s = (Student)it.next();
+            if(s.yearOfStudy == this.yearOfStudy && this.specialities.indexOf(s.speciality) >= 0){
+                this.students.add(s);
+            }
+        }
+    }
+    void addFile(String name, String path){
+        CourseFile c = new CourseFile(name, path);
+        this.files.add(c);
+    }
+
+    void addFile(CourseFile file){
+        this.files.add(file);
+    }
     @Override
     public boolean equals(Object o ){
         Course c = (Course)o;
@@ -35,30 +54,4 @@ public class Course {
     public int hashCode(){
         return this.courseTitle.hashCode() * this.description.hashCode() * this.yearOfStudy * 31;
     }
-
-
-
-    public static class CourseFile {
-        ArrayList<String> paths;
-        Course curcourse;
-        public CourseFile() {}
-
-        public CourseFile(Course curcourse, String ...a){
-            this.curcourse = curcourse;
-            for(String s : a){
-                paths.add(s);
-            }
-        }
-        void addPath(String p){
-            paths.add(p);
-        }
-        void viewCourseFiles(){
-            Iterator it = this.paths.iterator();
-            while(it.hasNext()){
-                System.out.println(it.next());
-            }
-        }
-    }
-
-
 }

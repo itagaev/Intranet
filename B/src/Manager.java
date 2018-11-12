@@ -10,13 +10,8 @@ public class Manager extends User  {
       this.name = name;
     }
 
-    public void addCourseRegistration(String courseTitle, String description, int yearOfStudy, String ...a){
-        ArrayList<String> spec = new ArrayList<String>();
-        for(String s : a){
-            spec.add(s);
-        }
-        Course s = new Course(courseTitle, description, yearOfStudy, spec);
-        Main.coursesreg.add(s);
+    public void addCourseRegistration(String courseTitle, String description, int yearOfStudy, String departmet, String ...s){
+        Main.coursesreg.add(new Course(courseTitle, description, yearOfStudy, departmet, s));
     }
 
     public void viewInfo(String s){
