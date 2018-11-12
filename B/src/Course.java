@@ -1,15 +1,22 @@
+import jdk.jfr.Percentage;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Course {
-    String courseTitle, description;
-
+    String courseTitle, description, speciality;
+    ArrayList<String> specialities;
+    int yearOfStudy;
 
     public Course() {}
 
-    public Course(String courseTitle, String description){
+    public Course(String courseTitle, String description, int yearOfStudy, ArrayList<String> specialities){
         this.courseTitle = courseTitle;
         this.description = description;
+        this.yearOfStudy = yearOfStudy;
+        for(String s : specialities){
+            this.specialities.add(s);
+        }
     }
 
     @Override
@@ -24,8 +31,10 @@ public class Course {
         return this.courseTitle;
     }
 
-
-
+    @Override
+    public int hashCode(){
+        return this.courseTitle.hashCode() * this.description.hashCode() * this.yearOfStudy * 31;
+    }
 
 
 

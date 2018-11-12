@@ -1,19 +1,53 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.HashSet;
-
-public class Teacher extends User{
+enum JobTitle{
+    TUTOR,
+    LECTOR,
+    SENIOR_LECTOR,
+    PROFESSOR
+}
+public class Teacher extends User implements Comparable<Teacher>{
     private double salary;
-    public String department;
+    public String department, surname, name;
     HashSet<Course> mycourses = new HashSet<Course>();
+    File actions;
+    JobTitle jt;
 
    public Teacher() {}
 
    public Teacher(String surname, String name, String department, double salary){
-        super(surname, name);
+        this.surname = surname;
+        this.name = name;
         this.department = department;
         this.salary = salary;
+       actions = new File(Main.initpath + "\\" + this.surname + this.name + "Teacher");
+       try{
+           if(!actions.exists())
+               actions.createNewFile();
+       } catch(IOException e){
+           System.out.println("Error");
+       }
    }
+
+    public Teacher(String surname, String name, String department, double salary, JobTitle jt){
+        this.surname = surname;
+        this.name = name;
+        this.department = department;
+        this.salary = salary;
+        actions = new File(Main.initpath + "\\" + this.surname + this.name + "Teacher");
+        try{
+            if(!actions.exists())
+                actions.createNewFile();
+        } catch(IOException e){
+            System.out.println("Error");
+        }
+        this.jt = jt;
+    }
     public String toString(){
         return "My name is " + this.surname + " " + this.name + ". I am teacher";
     }
@@ -23,6 +57,18 @@ public class Teacher extends User{
 
     void addCourse(Course c){
        this.mycourses.add(c);
+        try{
+            FileWriter fw = new FileWriter(this.actions, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write("Teacher added the course " + c.courseTitle);
+            bw.newLine();
+
+            bw.close();
+
+        } catch(IOException e) {
+            System.out.println("Error");
+        }
     }
 
     void deleteCourse(String nameOfCourse){
@@ -34,6 +80,18 @@ public class Teacher extends User{
                this.mycourses.remove(t);
                break;
             }
+        }
+        try{
+            FileWriter fw = new FileWriter(this.actions, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write("Teacher deleted the course" + nameOfCourse);
+            bw.newLine();
+
+            bw.close();
+
+        } catch(IOException e) {
+            System.out.println("Error");
         }
     }
 
@@ -48,6 +106,18 @@ public class Teacher extends User{
 
      void putMark(Student s, Course c, int mark){
        s.studycourses.put(c, mark);
+         try{
+             FileWriter fw = new FileWriter(this.actions, true);
+             BufferedWriter bw = new BufferedWriter(fw);
+
+             bw.write("Teacher putted the the mark " + mark + " to student " + s.name + " " + s.surname);
+             bw.newLine();
+
+             bw.close();
+
+         } catch(IOException e) {
+             System.out.println("Error");
+         }
      }
     public boolean equals(Object o){
         Teacher t = (Teacher)o;
@@ -57,5 +127,11 @@ public class Teacher extends User{
 
     public int hashCode(){
         return this.surname.hashCode() * this.name.hashCode() * this.department.hashCode() * (int)this.salary * 31;
+    }
+
+    public int compareTo(Teacher t){
+       String test = this.surname + this.name;
+       String test1 = t.surname + this.name;
+       return test.compareTo(test1);
     }
 }

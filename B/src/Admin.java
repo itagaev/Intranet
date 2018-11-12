@@ -1,5 +1,15 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Admin extends User {
+    String surname, name;
     public Admin() {}
+    public Admin(String surname, String name){
+        this.surname = surname;
+        this.name = name;
+    }
     public void addUser(Object o){
          if(o instanceof Student) {
              Student s = (Student)o;
@@ -30,7 +40,7 @@ public class Admin extends User {
              if(a.length == 4)
                  stu = new Student(a[0], a[1], a[2], a[3]);
              if(a.length == 5)
-                 stu = new Student(a[0], a[1], a[2], a[3], Integer.parseInt(a[4]));
+                 stu = new Student(a[0], a[1], a[2], a[3], Integer.parseInt(a[4]), Double.parseDouble(a[5]));
              Main.students.set(index, stu);
         }
         if(o instanceof Teacher) {
@@ -41,6 +51,41 @@ public class Admin extends User {
         }
     }
 
+    public void seeLogFiles(Object o){
+        if(o instanceof  Student){
+            Student s = (Student)o;
+            try {
+                FileReader fr = new FileReader(s.actions);
+                BufferedReader br = new BufferedReader(fr);
+                String line = br.readLine();
+                System.out.println(line);
+                while(line != null){
+                    line = br.readLine();
+                    System.out.println(line);
+                }
+
+            } catch(IOException e){
+                System.out.println("Error");
+            }
+        }
+        if(o instanceof  Teacher){
+            Teacher s = (Teacher)o;
+            try {
+                FileReader fr = new FileReader(s.actions);
+                BufferedReader br = new BufferedReader(fr);
+                String line = br.readLine();
+                System.out.println(line);
+                while(line != null){
+                    line = br.readLine();
+                    System.out.println(line);
+                }
+
+            } catch(IOException e){
+                System.out.println("Error");
+            }
+        }
+    }
+
 
 
     public String toString(){
@@ -48,7 +93,7 @@ public class Admin extends User {
     }
 
     public boolean equals(Object o){
-        Student s = (Student)o;
+        Admin s = (Admin)o;
         if(s.surname.equals(this.surname) && s.name.equals(this.name)) return true;
         return false;
     }
