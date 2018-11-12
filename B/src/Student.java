@@ -31,7 +31,7 @@ public class Student extends User implements Viewable, Cloneable, Serializable {
          this.GPA = GPA;
         this.realid = this.id;
         this.id++;
-       path = "student" + this.realid + ".ser";
+       path = "D:\\ProjectAttempts\\B\\src\\ser\\student" + this.realid + ".ser";
     }
 
     public Student(String surname, String name, String department, String speciality){
@@ -48,7 +48,7 @@ public class Student extends User implements Viewable, Cloneable, Serializable {
         } catch(IOException e){
             System.out.println("Error");
         }
-        path = "student" + this.realid + ".ser";
+        path = "D:\\ProjectAttempts\\B\\src\\ser\\student" + this.realid + ".ser";
     }
 
     void registerForCourse(Course c){
